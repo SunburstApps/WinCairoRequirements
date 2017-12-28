@@ -49,7 +49,11 @@ if(NOT DEFINED NASM)
   set(NASM nasm CACHE FILEPATH "Path to NASM/YASM executable")
 endif()
 
-set(NAFLAGS -fwin64)
+if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+  set(NAFLAGS -fwin64)
+else()
+  set(NAFLAGS -fwin32)
+endif()
 
 add_custom_command(OUTPUT ${ICUDATA_OBJ}
     DEPENDS ${ICUDATA_FILE}
@@ -89,6 +93,9 @@ macro(add_shared_library NAME SOURCES)
   list(APPEND TARGETS ${NAME})
   add_library(${NAME} SHARED ${SOURCES})
   target_include_directories(${NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
+  if (MSVC)
+    set_target_properties(${NAME} PROPERTIES COMPILE_FLAGS "/wd4229")
+  endif()
 endmacro()
 
 macro(add_static_library NAME SOURCES)
@@ -98,6 +105,7 @@ macro(add_static_library NAME SOURCES)
   target_include_directories(${NAME}-static PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
   if (MSVC)
     set_target_properties(${NAME}-static PROPERTIES PREFIX "lib")
+    set_target_properties(${NAME} PROPERTIES COMPILE_FLAGS "/wd4229")
   endif()
 endmacro()
 

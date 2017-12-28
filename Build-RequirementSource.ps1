@@ -152,7 +152,10 @@ $libxml2Options = @(
   # Requirements XSLT
   '-DWITH_HTML=ON',
   '-DWITH_TREE=ON',
-  '-DWITH_XPATH=ON'
+  '-DWITH_XPATH=ON',
+
+  # Use the correct version of ICU. (Some Windows SDKs include incompatible copies of ICU.)
+  '-DICU_ROOT="' + $installPath + '"'
 );
 
 #----------------------------------------------------------------------

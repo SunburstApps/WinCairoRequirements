@@ -16,7 +16,12 @@ Param (
   [ValidateSet('ninja','vs2015','vs2017')]
   [string] $generator = 'ninja',
   [Parameter()]
-  [string] $platform = 'Windows'
+  [string] $platform = 'Windows',
+
+  # Package-RequirementSource options
+  [Parameter()]
+  [ValidateSet('32', '64')]
+  [string] $suffix = '64'
 )
 
 #----------------------------------------------------------------------
@@ -50,4 +55,4 @@ $args = @{
 # Package
 #----------------------------------------------------------------------
 
-& (Join-Path $PSScriptRoot Package-RequirementSource.ps1) -Root $installationPath;
+& (Join-Path $PSScriptRoot Package-RequirementSource.ps1) -Root $installationPath -Suffix $suffix;

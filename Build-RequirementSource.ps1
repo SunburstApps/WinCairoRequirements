@@ -186,6 +186,15 @@ if ([System.IO.File]::Exists('C:\Program Files\Nasm\nasm.exe')) {
 }
 
 #----------------------------------------------------------------------
+# CFLite options
+#----------------------------------------------------------------------
+
+$cfliteOptions = @(
+  # Use the correct version of ICU. (Some Windows SDKs include incompatible copies of ICU.)
+  '-DICU_ROOT="' + $installPath + '"'
+)
+
+#----------------------------------------------------------------------
 # Build function
 #----------------------------------------------------------------------
 
@@ -263,4 +272,4 @@ Build-Requirement -Name 'sqlite';
 Build-Requirement -Name 'pixman';
 Build-Requirement -Name 'cairo';
 Build-Requirement -Name 'pthreads';
-Build-Requirement -Name 'cflite';
+Build-Requirement -Name 'cflite' -Options $cfliteOptions;

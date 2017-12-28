@@ -174,6 +174,18 @@ $libxsltOptions = @(
 );
 
 #----------------------------------------------------------------------
+# jpeg-turbo options
+#----------------------------------------------------------------------
+
+# Attempt to find nasm where its installer places it.
+# (At least, this is where it is on my system.)
+if ([System.IO.File]::Exists('C:\Program Files\Nasm\nasm.exe')) {
+  $jpegOptions = @( '-DNASM="C:\Program Files\Nasm\nasm.exe"' )
+} else {
+  $jpegOptions = @()
+}
+
+#----------------------------------------------------------------------
 # Build function
 #----------------------------------------------------------------------
 
@@ -244,7 +256,7 @@ Build-Requirement -Name 'icu' -Options $icuOptions;
 Build-Requirement -Name 'libxml2' -Options $libxml2Options;
 Build-Requirement -Name 'libxslt' -Options $libxsltOptions;
 Build-Requirement -Name 'libpng';
-Build-Requirement -Name 'libjpeg-turbo';
+Build-Requirement -Name 'libjpeg-turbo' -Options $jpegOptions;
 Build-Requirement -Name 'libwebp';
 Build-Requirement -Name 'sqlite';
 #Build-Requirement -Name 'freetype';

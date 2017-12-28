@@ -98,6 +98,18 @@ $curlOptions = @(
 );
 
 #----------------------------------------------------------------------
+# icu options
+#----------------------------------------------------------------------
+
+# Attempt to find nasm where its installer places it.
+# (At least, this is where it is on my system.)
+if ([System.IO.File]::Exists('C:\Program Files\Nasm\nasm.exe')) {
+  $icuOptions = @( '-DNASM="C:\Program Files\Nasm\nasm.exe"' )
+} else {
+  $icuOptions = @()
+}
+
+#----------------------------------------------------------------------
 # libxml2 options
 #----------------------------------------------------------------------
 
@@ -225,7 +237,7 @@ Build-Requirement -Name 'zlib';
 Build-Requirement -Name 'libressl';
 Build-Requirement -Name 'nghttp2' -Options $nghttp2Options;
 Build-Requirement -Name 'curl' -Options $curlOptions;
-Build-Requirement -Name 'icu';
+Build-Requirement -Name 'icu' -Options $icuOptions;
 Build-Requirement -Name 'libxml2' -Options $libxml2Options;
 Build-Requirement -Name 'libxslt' -Options $libxsltOptions;
 Build-Requirement -Name 'libpng';
